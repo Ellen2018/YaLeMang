@@ -8,6 +8,10 @@ import android.util.Log
 import java.lang.Exception
 import java.lang.ref.WeakReference
 
+/**
+ * 使用：
+ * 调用startCountdown方法进行倒计时任务
+ */
 abstract class BaseSplashActivity : AppCompatActivity() {
     private var isUserJump = false
     private var seconds = 0
@@ -56,6 +60,7 @@ abstract class BaseSplashActivity : AppCompatActivity() {
         private lateinit var countdownHandler: CountdownHandler
 
         class CountdownHandler(baseSplashActivity: BaseSplashActivity) : Handler() {
+            //采用弱引用的方式防止内存泄漏
             private var weakReference: WeakReference<BaseSplashActivity> =
                 WeakReference(baseSplashActivity)
 
@@ -67,6 +72,13 @@ abstract class BaseSplashActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 跳转
+     */
     abstract fun jump()
+
+    /**
+     * 每过一秒都会调用此方法
+     */
     abstract fun handlerTime(seconds: Int, remainingTime: Int)
 }
